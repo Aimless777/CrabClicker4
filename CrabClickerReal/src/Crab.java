@@ -8,17 +8,16 @@ import java.net.URL;
 
 
 public class Crab {
-	private  int size;
-	int x;
-	private int y;
+	private int size;
+	private int x, y;
 	private String fileName;
 	private Image img;
 
 
 	public Crab(String fileName) {
-		x = 400;
-		y = 300;
-		size = 50;
+		x = 100;
+		y = 75;
+		size = 15;
 		img = getImage(fileName);
 		init(x, y);
 	}

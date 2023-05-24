@@ -14,18 +14,24 @@ import java.awt.Graphics;
 import java.awt.MouseInfo;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.geom.AffineTransform;
 
-public class Frame extends JFrame implements ActionListener, MouseListener {
+public class Frame extends JPanel implements ActionListener, MouseListener {
 	 int screen_width = 800;
 	 int screen_height = 800;
-	 Timer t;
 	 Crab crab;
 	 Background bg;
 	 private static long crabs;
 	 private static long crabsPerSecond;
 	
+	
+	
+	public void paint(Graphics g) {
+		super.paintComponents(g);
+		crab.paint(g);
+	}
 	
 	public Frame() {
 		JFrame f = new JFrame();
@@ -38,9 +44,7 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
  
 		
 		f.add(this);
-		
 		t = new Timer(16, this);
-		
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -48,14 +52,10 @@ public class Frame extends JFrame implements ActionListener, MouseListener {
         
 	}
 	
-	
-	public void paint(Graphics g) {
-		super.paintComponents(g);
-		crab.paint(g);
-	}
-	
-	
+	Timer t;
 
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
