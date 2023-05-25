@@ -23,9 +23,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 int screen_height = 800;
 	 Crab crab;
 	 Background bg;
-	 private static long crabs;
-	 private static long crabsPerSecond;
-	
+	 private static int crabs;
 	
 	
 	public void paint(Graphics g) {
@@ -41,7 +39,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		f.addMouseListener(this);
 		
 		crab = new Crab("Better_Crab.png");
- 
+		
 		
 		f.add(this);
 		t = new Timer(16, this);
