@@ -8,7 +8,8 @@ import java.net.URL;
 
 
 public class Crab {
-	private double size = 1;
+	private double scale = 1;
+	private double size = 600;
 	private int x, y;
 	private String fileName;
 	private Image img;
@@ -46,13 +47,12 @@ public class Crab {
 	}
 	
 	public void move() {
-		x = (int)(Math.random() * 700); 
-		setX(x);
-		y = (int)(Math.random() * 700);
-		setY(y);
-		size = (Math.random() * .6);
+		x = (int)(Math.random() * 500); 
+		y = (int)(Math.random() * 500);
+		scale = (Math.random() * .4) + .2; 
+		size = 700 * scale;
 		tx.setToTranslation(x, y);
-		tx.scale(size, size);
+		tx.scale(scale, scale);
 	}
 	
 	public int getX() {

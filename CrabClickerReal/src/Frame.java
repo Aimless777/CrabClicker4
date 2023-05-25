@@ -24,12 +24,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 Crab crab;
 	 Background bg;
 	 private static int crabs;
-	
-	
+	 Font font = new Font("Courier New", 1, 50);
+	 
+	public void countDown(Graphics g) {
+		if (System.currentTimeMillis() < 1000) {
+			g.drawString("1:00", 300, 500);
+		}
+	}
+	 
 	public void paint(Graphics g) {
 		super.paintComponents(g);
 		bg.paint(g);
 		crab.paint(g);
+		g.setFont(font);
+		g.setColor(Color.white);
+		g.drawString("1:00", 325, 100);
 	}
 	
 	public Frame() {
@@ -40,11 +49,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		f.addMouseListener(this);
 		
 		crab = new Crab("Better_Crab.png");
-		bg = new Background("ccbg.png");
-				
+		bg = new Background("ccbg.png");	
 		
 		f.add(this);
-		t = new Timer(16, this);
+		t = new Timer(17, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -53,7 +61,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	}
 	
 	Timer t;
-
+	
 	
 	
 	@Override
@@ -70,7 +78,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		System.out.println(e.getPoint());
         if (e.getX() >= crab.getX() && e.getX() <= (crab.getX() + crab.getSize()) && e.getY() >= crab.getY() && e.getY() <= (crab.getY() + crab.getSize()))
         {
-            crab.move();
+        	System.out.println(crab.getSize());
+        	crab.move();
         }
 	}
 
