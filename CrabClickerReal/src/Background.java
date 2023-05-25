@@ -19,7 +19,6 @@ public class Background {
 		y = 0;
 		img = getImage(fileName);
 		init(x, y);
-
 	}
 
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -31,7 +30,7 @@ public class Background {
 
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(1, 1);
+		tx.scale(7.83, 7.61);
 	}
 
 	private Image getImage(String path) {

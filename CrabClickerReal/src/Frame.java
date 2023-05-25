@@ -28,6 +28,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	
 	public void paint(Graphics g) {
 		super.paintComponents(g);
+		bg.paint(g);
 		crab.paint(g);
 	}
 	
@@ -35,11 +36,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		JFrame f = new JFrame();
 		f.setTitle("Crab Clicker");
 		f.setSize(screen_width, screen_height);
-		f.setResizable(false);
+		f.setResizable(true);
 		f.addMouseListener(this);
 		
 		crab = new Crab("Better_Crab.png");
-		
+		bg = new Background("ccbg.png");
+				
 		
 		f.add(this);
 		t = new Timer(16, this);
@@ -63,9 +65,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(e.getPoint());
+        if (e.getX() >= crab.getX() && e.getX() <= (crab.getX() + crab.getSize()) && e.getY() >= crab.getY() && e.getY() <= (crab.getY() + crab.getSize()))
+        {
+            crab.move();
+        }
 	}
 
 

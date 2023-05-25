@@ -8,16 +8,15 @@ import java.net.URL;
 
 
 public class Crab {
-	private int size;
+	private double size = 1;
 	private int x, y;
 	private String fileName;
 	private Image img;
 
 
 	public Crab(String fileName) {
-		x = 100;
-		y = 75;
-		size = 15;
+		x = 63;
+		y = 200;
 		img = getImage(fileName);
 		init(x, y);
 	}
@@ -46,6 +45,16 @@ public class Crab {
 		return tempImage;
 	}
 	
+	public void move() {
+		x = (int)(Math.random() * 700); 
+		setX(x);
+		y = (int)(Math.random() * 700);
+		setY(y);
+		size = (Math.random() * .6);
+		tx.setToTranslation(x, y);
+		tx.scale(size, size);
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -62,5 +71,9 @@ public class Crab {
 	public void setY(int y) {
 		this.y = y;
 		tx.setToTranslation(x, y);
+	}
+	
+	public double getSize() {
+		return size;
 	}
 }
