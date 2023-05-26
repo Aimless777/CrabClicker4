@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.geom.AffineTransform;
+import java.util.concurrent.TimeUnit;
 
 public class Frame extends JPanel implements ActionListener, MouseListener {
 	 int screen_width = 800;
@@ -25,10 +26,26 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 Background bg;
 	 private static int crabs;
 	 Font font = new Font("Courier New", 1, 50);
+	 int count = 0;
+	 public int numSeconds = 59;
 	 
-	public void countDown(Graphics g) {
+	public void countDown(Graphics g) throws InterruptedException {
 		if (System.currentTimeMillis() < 1000) {
-			g.drawString("1:00", 300, 500);
+			g.drawString("1:00", 300, 500);	
+		}
+		TimeUnit.SECONDS.sleep(1);
+		System.out.println(numSeconds);
+		if (numSeconds >= 10) {
+			g.drawString("0:" + Integer.toString(numSeconds), 300, 500);
+		} else if(numSeconds  < 10) {
+			g.drawString("0:0" + Integer.toString(numSeconds), 300, 500);
+		}
+		numSeconds--;
+		if (numSeconds > 0) {
+			countDown(g);
+		} else {
+			g.drawString("0:00", 300, 500);
+			return;
 		}
 	}
 	 
@@ -38,7 +55,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		crab.paint(g);
 		g.setFont(font);
 		g.setColor(Color.white);
-		g.drawString("1:00", 325, 100);
+		if (count == 0) {	
+			try {
+				countDown(g);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			count++;
+		}	
 	}
 	
 	public Frame() {
