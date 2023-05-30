@@ -25,45 +25,53 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 Crab crab;
 	 Background bg;
 	 private static int crabs;
-	 Font font = new Font("Courier New", 1, 50);
-	 int count = 0;
+	 Font font = new Font("Courier New", 1, 100);
+	 Font font2 = new Font("Courier New", 1, 20);
 	 public int numSeconds = 59;
+	 public static int numClicks = 0;
+	 public static int numCrabs;
 	 
 	public void countDown(Graphics g) throws InterruptedException {
-		if (System.currentTimeMillis() < 1000) {
-			g.drawString("1:00", 300, 500);	
-		}
 		TimeUnit.SECONDS.sleep(1);
-		System.out.println(numSeconds);
 		if (numSeconds >= 10) {
-			g.drawString("0:" + Integer.toString(numSeconds), 300, 500);
-		} else if(numSeconds  < 10) {
-			g.drawString("0:0" + Integer.toString(numSeconds), 300, 500);
+			g.drawString("0:" + Integer.toString(numSeconds), 270, 100);
+		} else if(numSeconds < 10) {
+			g.drawString("0:0" + Integer.toString(numSeconds), 270, 100);
 		}
 		numSeconds--;
-		if (numSeconds > 0) {
-			countDown(g);
-		} else {
-			g.drawString("0:00", 300, 500);
-			return;
-		}
 	}
 	 
 	public void paint(Graphics g) {
 		super.paintComponents(g);
 		bg.paint(g);
-		crab.paint(g);
-		g.setFont(font);
+		if (numSeconds >= 0) {
+			crab.paint(g);
+		}
 		g.setColor(Color.white);
-		if (count == 0) {	
+		if (numClicks == 0) {
+			AffineTransform affineTransform = new AffineTransform();
+			affineTransform.rotate(Math.toRadians(10), 0, 0);
+			Font rotatedFont = font2.deriveFont(affineTransform);
+			g.setFont(rotatedFont);
+			g.drawString("Click the crab", 500, 640);
+		}
+		g.setFont(font);
+		if (numClicks == 0 && numSeconds == 59) {
+			g.drawString("1:00", 270, 100);	
+		}
+		if (numClicks > 0) {	
 			try {
-				countDown(g);
+				if (numSeconds >= 0) {
+					countDown(g);
+				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			count++;
 		}	
+		if (numClicks == 1 && numSeconds == -1) {
+			g.drawString("0:00", 270, 100);
+		}
 	}
 	
 	public Frame() {
@@ -77,7 +85,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		bg = new Background("ccbg.png");	
 		
 		f.add(this);
-		t = new Timer(17, this);
+		t = new Timer(1, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -103,7 +111,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		System.out.println(e.getPoint());
         if (e.getX() >= crab.getX() && e.getX() <= (crab.getX() + crab.getSize()) && e.getY() >= crab.getY() && e.getY() <= (crab.getY() + crab.getSize()))
         {
-        	System.out.println(crab.getSize());
+        	if (numClicks == 0) {
+        		numClicks++;
+        	}
         	crab.move();
         }
 	}
