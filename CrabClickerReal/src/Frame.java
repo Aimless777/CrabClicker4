@@ -1,6 +1,3 @@
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,10 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.MouseInfo;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.geom.AffineTransform;
@@ -27,11 +21,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 private static int crabs;
 	 Font font = new Font("Courier New", 1, 100);
 	 Font font2 = new Font("Courier New", 1, 20);
+	 Font font3 = new Font("Goudy Old Style", 1, 30);
 	 public int numSeconds = 59;
 	 public static int numClicks = 0;
-	 public static int numCrabs;
+	 public static int numCrabs = -1;
 	 
 	public void countDown(Graphics g) throws InterruptedException {
+		crab.move();
 		TimeUnit.SECONDS.sleep(1);
 		if (numSeconds >= 10) {
 			g.drawString("0:" + Integer.toString(numSeconds), 270, 100);
@@ -70,7 +66,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 			}
 		}	
 		if (numClicks == 1 && numSeconds == -1) {
-			g.drawString("0:00", 270, 100);
+			g.drawString("1:00", 270, 100);
+		}
+		g.setFont(font3);
+		if (numCrabs == -1) {
+			g.drawString("Crab Count: " + Integer.toString(numCrabs + 1), 20, 740);
+		} else {
+			g.drawString("Crab Count: " + Integer.toString(numCrabs), 20, 740);
 		}
 	}
 	
@@ -78,7 +80,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		JFrame f = new JFrame();
 		f.setTitle("Crab Clicker");
 		f.setSize(screen_width, screen_height);
-		f.setResizable(true);
+		f.setResizable(false);
 		f.addMouseListener(this);
 		
 		crab = new Crab("Better_Crab.png");
@@ -108,13 +110,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(e.getPoint());
         if (e.getX() >= crab.getX() && e.getX() <= (crab.getX() + crab.getSize()) && e.getY() >= crab.getY() && e.getY() <= (crab.getY() + crab.getSize()))
         {
+        	numCrabs++;
         	if (numClicks == 0) {
         		numClicks++;
         	}
-        	crab.move();
         }
 	}
 
@@ -135,16 +136,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 	
+	
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+			
+		}
+
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
