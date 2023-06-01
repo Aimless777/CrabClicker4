@@ -22,9 +22,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 Font font = new Font("Courier New", 1, 100);
 	 Font font2 = new Font("Courier New", 1, 20);
 	 Font font3 = new Font("Goudy Old Style", 1, 30);
-	 public int numSeconds = 59;
+	 public static int numSeconds = 59;
 	 public static int numClicks = 0;
 	 public static int numCrabs = -1;
+	 public static int highscore = 0;
 	 
 	public void countDown(Graphics g) throws InterruptedException {
 		crab.move();
@@ -40,10 +41,24 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	public void paint(Graphics g) {
 		super.paintComponents(g);
 		bg.paint(g);
-		if (numSeconds >= 0) {
+		if (numSeconds == -1) {
+			crab.setY(200);
+			crab.setX(63);
+			crab.setSize(600);
 			crab.paint(g);
+			if (numCrabs > highscore) {
+				highscore = numCrabs;
+				g.setFont(font2);
+			}
+			numClicks = 0;
+			numSeconds = 59;
+			numCrabs = 0;
+		} else {
+			crab.paint(g);
+			g.setFont(font2);
+			g.setColor(Color.white);
+			g.drawString("HIGHSCORE: " + Integer.toString(highscore), 320, 135);
 		}
-		g.setColor(Color.white);
 		if (numClicks == 0) {
 			AffineTransform affineTransform = new AffineTransform();
 			affineTransform.rotate(Math.toRadians(10), 0, 0);
@@ -57,7 +72,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		}
 		if (numClicks > 0) {	
 			try {
-				if (numSeconds >= 0) {
+				if (numSeconds >= -1) {
 					countDown(g);
 				}
 			} catch (InterruptedException e) {
@@ -66,7 +81,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 			}
 		}	
 		if (numClicks == 1 && numSeconds == -1) {
-			g.drawString("1:00", 270, 100);
+			g.drawString("0:00", 270, 100);
 		}
 		g.setFont(font3);
 		if (numCrabs == -1) {
@@ -87,7 +102,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		bg = new Background("ccbg.png");	
 		
 		f.add(this);
-		t = new Timer(1, this);
+		t = new Timer(20, this);
 		t.start();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);

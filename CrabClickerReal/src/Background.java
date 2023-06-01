@@ -28,7 +28,7 @@ public class Background {
 		g2.drawImage(img, tx, null);
 	}
 
-	private void init(double a, double b) {
+	public void init(double a, double b) {
 		tx.setToTranslation(a, b);
 		tx.scale(7.83, 7.61);
 	}

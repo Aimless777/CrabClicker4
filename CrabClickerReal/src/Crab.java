@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class Crab {
 	private double scale = 1;
-	private double size = 600;
+	private double size;
 	private int x, y;
 	private String fileName;
 	private Image img;
@@ -18,6 +18,7 @@ public class Crab {
 	public Crab(String fileName) {
 		x = 63;
 		y = 200;
+		size = 600;
 		img = getImage(fileName);
 		init(x, y);
 	}
@@ -47,10 +48,10 @@ public class Crab {
 	}
 	
 	public void move() {
-		x = (int)(Math.random() * 500); 
+		x = (int)(Math.random() * 420); 
 		y = (int)(Math.random() * 500);
 		scale = (Math.random() * .4) + .2; 
-		size = 700 * scale;
+		size = 600 * scale;
 		tx.setToTranslation(x, y);
 		tx.scale(scale, scale);
 	}
@@ -58,7 +59,7 @@ public class Crab {
 	public int getX() {
 		return x;
 	}
-
+	
 	public void setX(int x) {
 		this.x = x;
 		tx.setToTranslation(x, y);
@@ -73,7 +74,15 @@ public class Crab {
 		tx.setToTranslation(x, y);
 	}
 	
+	public void setSize(int paramSize) {
+		size = paramSize;
+	}
+	
 	public double getSize() {
 		return size;
+	}
+	
+	public void setScale(double paramScale) {
+		scale = paramScale;
 	}
 }
