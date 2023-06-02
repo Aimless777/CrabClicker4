@@ -17,7 +17,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 int screen_width = 800;
 	 int screen_height = 800;
 	 Crab crab;
-	 Background bg;
+	 Background bbg;
+	 Background bg2;
 	 private static int crabs;
 	 Font font = new Font("Courier New", 1, 100);
 	 Font font2 = new Font("Courier New", 1, 20);
@@ -40,7 +41,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 
 	public void paint(Graphics g) {
 		super.paintComponents(g);
-		bg.paint(g);
+		bbg.paint(g);
+		bg2.paint(g);
 		if (numSeconds == -1) {
 			crab.setY(200);
 			crab.setX(63);
@@ -55,6 +57,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 			numCrabs = 0;
 		} else {
 			crab.paint(g);
+			g.drawRect(crab.getX(), crab.getY(), (int)(1.086*crab.getSize()), (int)(.62*crab.getSize()));
 			g.setFont(font2);
 			g.setColor(Color.white);
 			g.drawString("HIGHSCORE: " + Integer.toString(highscore), 320, 135);
@@ -95,11 +98,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		JFrame f = new JFrame();
 		f.setTitle("Crab Clicker");
 		f.setSize(screen_width, screen_height);
-		f.setResizable(false);
+		f.setResizable(true);
 		f.addMouseListener(this);
 		
 		crab = new Crab("Better_Crab.png");
-		bg = new Background("ccbg.png");	
+		bbg = new Background("blackbg.png");	
+		bg2 = new Background("bg_40.png");
 		
 		f.add(this);
 		t = new Timer(20, this);
@@ -125,7 +129,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-        if (e.getX() >= crab.getX() && e.getX() <= (crab.getX() + crab.getSize()) && e.getY() >= crab.getY() && e.getY() <= (crab.getY() + crab.getSize()))
+        if (e.getX() >= crab.getX() && e.getX() <= (crab.getX() + 1.086*crab.getSize()) && e.getY() >= crab.getY() && e.getY() <= (crab.getY() + .62*crab.getSize()))
         {
         	numCrabs++;
         	if (numClicks == 0) {
