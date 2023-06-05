@@ -27,6 +27,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	 public static int numClicks = 0;
 	 public static int numCrabs = -1;
 	 public static int highscore = 0;
+	 public static int numGames = 0;
 	 
 	public void countDown(Graphics g) throws InterruptedException {
 		crab.move();
@@ -43,6 +44,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 		super.paintComponents(g);
 		bbg.paint(g);
 		bg2.paint(g);
+		g.setColor(Color.white);
 		if (numSeconds == -1) {
 			crab.setY(200);
 			crab.setX(63);
@@ -57,18 +59,21 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 			numCrabs = 0;
 		} else {
 			crab.paint(g);
-			g.drawRect(crab.getX(), crab.getY(), (int)(1.086*crab.getSize()), (int)(.62*crab.getSize()));
 			g.setFont(font2);
 			g.setColor(Color.white);
 			g.drawString("HIGHSCORE: " + Integer.toString(highscore), 320, 135);
 		}
 		if (numClicks == 0) {
 			AffineTransform affineTransform = new AffineTransform();
-			affineTransform.rotate(Math.toRadians(10), 0, 0);
+			affineTransform.rotate(Math.toRadians(180), 0, 0);
 			Font rotatedFont = font2.deriveFont(affineTransform);
 			g.setFont(rotatedFont);
-			g.drawString("Click the crab", 500, 640);
-		}
+			if (numGames == 0) {
+				g.drawString("Click on the crab to start", 548, 590);
+			} else if (numGames > 0) {
+				g.drawString("Play Again", 450, 590);
+			}
+		} 
 		g.setFont(font);
 		if (numClicks == 0 && numSeconds == 59) {
 			g.drawString("1:00", 270, 100);	
@@ -134,6 +139,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
         	numCrabs++;
         	if (numClicks == 0) {
         		numClicks++;
+        		numGames++;
         	}
         }
 	}
@@ -165,9 +171,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener {
 	
 	
 	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-			
-		}
 
 	}
 	
